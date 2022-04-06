@@ -55,7 +55,7 @@ function snakeHistoryBuilder(initialSnake) {
     return true
   }
 
-  const moveDown = () => {
+  const moveDownOld = () => {
     const currentSnake = getCurrentSnake()
     const currentHead = currentSnake.head()
     const newHead = segmentBuilder(currentHead.x, currentHead.y + 1)
@@ -70,6 +70,25 @@ function snakeHistoryBuilder(initialSnake) {
       return segmentBuilder(segment.x, segment.y + 1)
     })
 
+    history.push(snakeBuilder(...newBody, newHead))
+    return true
+  }
+
+  const moveBodyTowardsHead = (bodySegments, head) => {
+    let prevSegment = {...head}
+    const newBody = bodySegments.map(segment => {
+      const newSegment = { ...prevSegment }
+      prevSegment = segment
+      return newSegment
+    })
+    newBody.reverse()
+    return newBody
+  }
+
+  const moveDown = () => {
+    const currentSnake = getCurrentSnake()
+    const newHead = segmentBuilder(currentSnake.head().x, currentSnake.head().y + 1)
+    const newBody = moveBodyTowardsHead(currentSnake.body(), currentSnake.head())
     history.push(snakeBuilder(...newBody, newHead))
     return true
   }

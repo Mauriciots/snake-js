@@ -77,6 +77,11 @@ function setRootElementSize() {
     }
   })
 
+  // setTimeout(() => {
+  //   snakeHistory.move('DOWN')
+  //   drawSnake(snakeHistory)
+  // }, 300)
+
   const intervalId = setInterval(() => {
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
