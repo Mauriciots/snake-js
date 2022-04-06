@@ -24,7 +24,7 @@ function snakeBuilder(...snakeSegments) {
 
 function snakeHistoryBuilder(initialSnake) {
   // snakeHistory stores each version of snake in time
-  // every time tick the last snake version is copied and changed
+  // every clock tick the last snake version is copied and changed
   // keeping the previous one in the array
   const history = [initialSnake]
 
@@ -40,18 +40,23 @@ function snakeHistoryBuilder(initialSnake) {
 
     switch (direction) {
       case 'RIGHT':
-        return moveRight()
+        return moveSnake(1, 0)
+      case 'LEFT':
+        return moveSnake(-1, 0)
       case 'DOWN':
-        return moveDown()
+        return moveSnake(0, 1)
+      case 'UP':
+        return moveSnake(0, -1)
       default:
         throw new Error('Invalid direction')
     }
   }
 
-  const moveRight = () => {
+  const moveSnake = (xStep, yStep) => {
     const currentSnake = getCurrentSnake()
-    const nextSnakeBody = currentSnake.segments.map(segment => segmentBuilder(segment.x + 1, segment.y))
-    history.push(snakeBuilder(...nextSnakeBody))
+    const newHead = segmentBuilder(currentSnake.head().x + xStep, currentSnake.head().y + yStep)
+    const newBody = moveBodyTowardsHead(currentSnake.body(), currentSnake.head())
+    history.push(snakeBuilder(newHead, ...newBody))
     return true
   }
 
@@ -64,20 +69,16 @@ function snakeHistoryBuilder(initialSnake) {
     })
   }
 
-  const moveDown = () => {
-    const currentSnake = getCurrentSnake()
-    const newHead = segmentBuilder(currentSnake.head().x, currentSnake.head().y + 1)
-    const newBody = moveBodyTowardsHead(currentSnake.body(), currentSnake.head())
-    history.push(snakeBuilder(newHead, ...newBody))
-    return true
-  }
-
   const detectCollision = (direction) => {
     switch (direction) {
       case 'RIGHT':
         return getCurrentSnake().head().x === WIDTH - 1
+      case 'LEFT':
+        return getCurrentSnake().head().x === 0
       case 'DOWN':
         return getCurrentSnake().head().y === HEIGHT - 1
+      case 'UP':
+        return getCurrentSnake().head().y === 0
       default:
         throw new Error('Invalid direction')
     }
