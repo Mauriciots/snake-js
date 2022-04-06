@@ -10,9 +10,9 @@ function segmentBuilder(x, y) {
 function snakeBuilder(...snakeSegments) {
   const segments = snakeSegments
 
-  const head = () => segments[segments.length - 1]
+  const head = () => segments[0]
 
-  const body = () => segments.slice(0, segments.length - 1).reverse()
+  const body = () => segments.slice(1, segments.length)
 
   // Returns an object that represents the snake body with all its segments
   return {
@@ -55,41 +55,20 @@ function snakeHistoryBuilder(initialSnake) {
     return true
   }
 
-  const moveDownOld = () => {
-    const currentSnake = getCurrentSnake()
-    const currentHead = currentSnake.head()
-    const newHead = segmentBuilder(currentHead.x, currentHead.y + 1)
-    let prevSegment = newHead
-
-    const newBody = currentSnake.body().map(segment => {
-      const prevX = prevSegment.x
-      prevSegment = segment
-      if (segment.x !== newHead.x) {
-        return segmentBuilder(prevX, segment.y)
-      }
-      return segmentBuilder(segment.x, segment.y + 1)
-    })
-
-    history.push(snakeBuilder(...newBody, newHead))
-    return true
-  }
-
   const moveBodyTowardsHead = (bodySegments, head) => {
     let prevSegment = {...head}
-    const newBody = bodySegments.map(segment => {
+    return bodySegments.map(segment => {
       const newSegment = { ...prevSegment }
       prevSegment = segment
       return newSegment
     })
-    newBody.reverse()
-    return newBody
   }
 
   const moveDown = () => {
     const currentSnake = getCurrentSnake()
     const newHead = segmentBuilder(currentSnake.head().x, currentSnake.head().y + 1)
     const newBody = moveBodyTowardsHead(currentSnake.body(), currentSnake.head())
-    history.push(snakeBuilder(...newBody, newHead))
+    history.push(snakeBuilder(newHead, ...newBody))
     return true
   }
 

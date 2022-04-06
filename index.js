@@ -36,9 +36,9 @@ function setRootElementSize() {
 
 (function() {
   const initialSnake = snakeBuilder(
-    segmentBuilder(12, 8),
-    segmentBuilder(13, 8),
     segmentBuilder(14, 8),
+    segmentBuilder(13, 8),
+    segmentBuilder(12, 8),
   )
   const snakeHistory = snakeHistoryBuilder(initialSnake)
   let direction = 'RIGHT'
@@ -72,7 +72,7 @@ function setRootElementSize() {
         }
         break
       default:
-        // ignore other keys
+        // please ignore other keys
         break
     }
   })
