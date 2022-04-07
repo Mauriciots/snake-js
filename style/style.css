@@ -5,11 +5,12 @@ body {
   align-items: center;
   height: 100vh;
   width: 100vw;
+  font-family: 'Lemon', cursive;
 }
 
 .container {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 }
 
 .game-board {
@@ -52,7 +53,6 @@ body {
 }
 
 h1, h2, button {
-  font-family: 'Lemon', cursive;
   text-align: center;
 }
 
@@ -110,11 +110,10 @@ h1 {
 }
 
 .button.back-button {
-  margin-top: 16px;
+  margin-top: 32px;
 }
 
 .game-score {
-  font-family: 'Lemon', cursive;
   font-size: 1rem;
   line-height: 1.2rem;
   text-align: right;
@@ -130,4 +129,17 @@ h1 {
 
 .best-score {
   padding-left: 8px;
+}
+
+.game-over-feedback {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.game-over-feedback img {
+  width: 2rem;
+  line-height: 2.5rem;
+  vertical-align: middle;
 }

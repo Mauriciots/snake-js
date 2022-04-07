@@ -1,3 +1,5 @@
+import { toCamelCase } from './utils.js'
+
 function segmentBuilder(x, y) {
   // Returns an object that represents the position of the snake's segments
   return { x, y }
@@ -120,8 +122,8 @@ function drawSnake(snakeHistory, direction) {
   // draw current snake
   changeTileColor(
     snakeHistory.getCurrentSnake(),
-    'center / cover no-repeat url(../assets/snake-body.jpg)',
-    `center / cover no-repeat url(../assets/snake-head-${direction.toLowerCase()}.jpg)`,
+    'center / cover no-repeat url(../assets/snakeBody.jpg)',
+    `center / cover no-repeat url(../assets/snakeHead${toCamelCase(direction)}.jpg)`,
   )
 }
 

@@ -40,8 +40,12 @@
     </div>
 
     <div id="game-over" class="screen game-over hidden-screen">
-      <h1>Game over!</h1>
-      <h2>Your score: <span id="game-score"></span></h2>
+      <h1>Game over</h1>
+      <div class="game-over-feedback">
+        <span id="game-over-score"></span>
+        <img src="assets/apple.png" alt="Game over score" id="game-over-score-img" />
+      </div>
+      <h2 id="new-best-score" style="display: none;">Wow, you got a new record!</h2>
       <button type="button" class="button back-button" id="back-btn">Back</button>
     </div>
   </main>

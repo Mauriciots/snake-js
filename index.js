@@ -22,9 +22,25 @@ function drawScore(score) {
   bestIconEl.style.display = newBest ? 'inline' : 'none'
 }
 
-function displayGameover() {
+function displayGameover(score) {
   document.querySelector('#game-play').classList.toggle('hidden-screen')
   document.querySelector('#game-over').classList.toggle('hidden-screen')
+  document.querySelector('#game-over-score').innerHTML = `Score: ${score}`
+
+  const bestScore = parseInt(localStorage.getItem(BEST_SCORE_STORAGE_KEY)) || 0
+
+  const scoreImgEl = document.querySelector('#game-over-score-img')
+  const newBestEl = document.querySelector('#new-best-score')
+
+  if (score > bestScore) {
+    scoreImgEl.setAttribute('src', 'assets/medal.png')
+    newBestEl.style.display = 'block'
+    // save new record
+    localStorage.setItem(BEST_SCORE_STORAGE_KEY, score)
+  } else {
+    newBestEl.style.display = 'none'
+    scoreImgEl.setAttribute('src', 'assets/apple.png')
+  }
 }
 
 function game() {
@@ -83,7 +99,7 @@ function game() {
     changeDirection()
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
-      // setTimeout(() => displayGameover(), 400)
+      setTimeout(() => displayGameover(points), 400)
       return
     }
     if (fruitManager.eat(snakeHistory.getCurrentSnake())) {
@@ -93,7 +109,7 @@ function game() {
       fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
     }
     drawSnake(snakeHistory, direction)
-  }, 300)
+  }, 150)
 }
 
 (function() {
@@ -105,7 +121,6 @@ function game() {
 
   document.querySelector('#back-btn').addEventListener('click', () => {
     document.querySelector('#game-over').classList.toggle('hidden-screen')
-    document.querySelector('#game-play').classList.toggle('hidden-screen')
-    game()
+    document.querySelector('#start-screen').classList.toggle('hidden-screen')
   })
 })();
