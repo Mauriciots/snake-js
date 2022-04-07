@@ -35,10 +35,14 @@ function drawScore(score) {
   const fruitManager = fruitManagerBuilder(WIDTH, HEIGHT)
   fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
 
-  window.addEventListener('keydown', e => {
+  let pressedKey = null
+
+  window.addEventListener('keydown', e => pressedKey = e.key)
+
+  const changeDirection = () => {
     const isLeftOrRightDirection = ['LEFT', 'RIGHT'].includes(direction)
     const isUpOrDownDirection = ['UP', 'DOWN'].includes(direction)
-    switch (e.key) {
+    switch (pressedKey) {
       case 'ArrowUp':
         if (isLeftOrRightDirection) {
           direction = 'UP';
@@ -63,9 +67,10 @@ function drawScore(score) {
         // please ignore other keys
         break
     }
-  })
+  }
 
   const intervalId = setInterval(() => {
+    changeDirection()
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
       return
