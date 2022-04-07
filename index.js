@@ -27,7 +27,7 @@ function game() {
   
   const boardManager = boardManagerBuilder(WIDTH, HEIGHT)
 
-  drawSnake(snakeHistory)
+  drawSnake(snakeHistory, direction)
 
   const fruitManager = fruitManagerBuilder(WIDTH, HEIGHT)
   fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
@@ -79,7 +79,7 @@ function game() {
       drawScore(points)
       fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
     }
-    drawSnake(snakeHistory)
+    drawSnake(snakeHistory, direction)
   }, 300)
 }
 
