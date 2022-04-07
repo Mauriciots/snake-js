@@ -12,7 +12,12 @@ function setRootElementSize() {
   rootEl.style.height = `${window.innerHeight}px`
 }
 
+function drawScore(score) {
+  console.log('score', score)
+}
+
 (function() {
+  let points = 0
   const initialSnake = snakeBuilder(
     segmentBuilder(14, 8),
     segmentBuilder(13, 8),
@@ -72,6 +77,8 @@ function setRootElementSize() {
     }
     if (fruitManager.eat(snakeHistory.getCurrentSnake())) {
       snakeHistory.grow()
+      points += 10
+      drawScore(points)
       fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
     }
     drawSnake(snakeHistory)
