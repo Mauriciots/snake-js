@@ -105,10 +105,10 @@ function snakeHistoryBuilder(boardWidth, boardHeight, initialSnake) {
 }
 
 function drawSnake(snakeHistory) {
-  const changeTileColor = (snake, color) => {
+  const changeTileColor = (snake, bg) => {
     snake.segments.forEach(segment => {
       const tileEl = document.querySelector(`#tile-${segment.x}-${segment.y}`)
-      tileEl.style.background = color
+      tileEl.style.background = bg
     })
   }
   // clear previous snake
@@ -116,7 +116,7 @@ function drawSnake(snakeHistory) {
     changeTileColor(snakeHistory.getPrevSnake(), null)
   }
   // draw current snake
-  changeTileColor(snakeHistory.getCurrentSnake(), '#005500')
+  changeTileColor(snakeHistory.getCurrentSnake(), 'center / cover no-repeat url(../assets/snake-body.jpg)')
 }
 
 export { segmentBuilder, snakeBuilder, snakeHistoryBuilder, drawSnake }
