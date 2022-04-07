@@ -36,22 +36,23 @@ function snakeHistoryBuilder(initialSnake) {
   const getPrevSnake = () => history.length > 1 ? history[history.length - 2] : null
 
   const move = (direction) => {
-    if (detectCollision(direction)) {
-      return false
-    }
-
     switch (direction) {
       case 'RIGHT':
-        return moveSnake(1, 0)
+        moveSnake(1, 0)
+        break
       case 'LEFT':
-        return moveSnake(-1, 0)
+        moveSnake(-1, 0)
+        break
       case 'DOWN':
-        return moveSnake(0, 1)
+        moveSnake(0, 1)
+        break
       case 'UP':
-        return moveSnake(0, -1)
+        moveSnake(0, -1)
+        break
       default:
         throw new Error('Invalid direction')
     }
+    return !detectCollision(direction)
   }
 
   const moveSnake = (xStep, yStep) => {
@@ -59,7 +60,6 @@ function snakeHistoryBuilder(initialSnake) {
     const newHead = segmentBuilder(currentSnake.head().x + xStep, currentSnake.head().y + yStep)
     const newBody = moveBodyTowardsHead(currentSnake.body(), currentSnake.head())
     history.push(snakeBuilder(newHead, ...newBody))
-    return true
   }
 
   const moveBodyTowardsHead = (bodySegments, head) => {
@@ -72,15 +72,22 @@ function snakeHistoryBuilder(initialSnake) {
   }
 
   const detectCollision = (direction) => {
+    // detect tail collision
+    const head = getCurrentSnake().head()
+    if (getCurrentSnake().body().find(segment => segment.x === head.x && segment.y === head.y)) {
+      return true
+    }
+
+    // detect wall collision
     switch (direction) {
       case 'RIGHT':
-        return getCurrentSnake().head().x === WIDTH - 1
+        return getCurrentSnake().head().x === WIDTH
       case 'LEFT':
-        return getCurrentSnake().head().x === 0
+        return getCurrentSnake().head().x === -1
       case 'DOWN':
-        return getCurrentSnake().head().y === HEIGHT - 1
+        return getCurrentSnake().head().y === HEIGHT
       case 'UP':
-        return getCurrentSnake().head().y === 0
+        return getCurrentSnake().head().y === -1
       default:
         throw new Error('Invalid direction')
     }

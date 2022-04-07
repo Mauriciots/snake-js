@@ -65,11 +65,6 @@ function drawScore(score) {
     }
   })
 
-  // setTimeout(() => {
-  //   snakeHistory.move('DOWN')
-  //   drawSnake(snakeHistory)
-  // }, 300)
-
   const intervalId = setInterval(() => {
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
@@ -82,6 +77,5 @@ function drawScore(score) {
       fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
     }
     drawSnake(snakeHistory)
-    // fruitManager.drop(snakeHistory.getCurrentSnake())
   }, 300)
 })();
