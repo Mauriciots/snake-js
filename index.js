@@ -2,15 +2,9 @@ import { boardManagerBuilder } from './scripts/board.js'
 import { segmentBuilder, snakeBuilder, snakeHistoryBuilder, drawSnake } from './scripts/snake.js'
 import { fruitManagerBuilder } from './scripts/fruit.js'
 
-// Board size is 28 tiles (width) per 16 tiles (height)
-const WIDTH = 28
+// Board size
+const WIDTH = 16
 const HEIGHT = 16
-
-function setRootElementSize() {
-  const rootEl = document.querySelector('#game-root')
-  rootEl.style.width = `${window.innerWidth}px`
-  rootEl.style.height = `${window.innerHeight}px`
-}
 
 function drawScore(score) {
   console.log('score', score)
@@ -19,14 +13,12 @@ function drawScore(score) {
 (function() {
   let points = 0
   const initialSnake = snakeBuilder(
-    segmentBuilder(14, 8),
-    segmentBuilder(13, 8),
-    segmentBuilder(12, 8),
+    segmentBuilder(8, 8),
+    segmentBuilder(7, 8),
+    segmentBuilder(6, 8),
   )
-  const snakeHistory = snakeHistoryBuilder(initialSnake)
+  const snakeHistory = snakeHistoryBuilder(WIDTH, HEIGHT, initialSnake)
   let direction = 'RIGHT'
-
-  setRootElementSize()
   
   const boardManager = boardManagerBuilder(WIDTH, HEIGHT)
 

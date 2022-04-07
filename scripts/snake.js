@@ -1,7 +1,3 @@
-// Board size is 20 tiles (width) per 16 tiles (height)
-const WIDTH = 28
-const HEIGHT = 16
-
 function segmentBuilder(x, y) {
   // Returns an object that represents the position of the snake's segments
   return { x, y }
@@ -25,7 +21,7 @@ function snakeBuilder(...snakeSegments) {
   }
 }
 
-function snakeHistoryBuilder(initialSnake) {
+function snakeHistoryBuilder(boardWidth, boardHeight, initialSnake) {
   // snakeHistory stores each version of snake in time
   // every clock tick the last snake version is copied and changed
   // keeping the previous one in the array
@@ -81,11 +77,11 @@ function snakeHistoryBuilder(initialSnake) {
     // detect wall collision
     switch (direction) {
       case 'RIGHT':
-        return getCurrentSnake().head().x === WIDTH
+        return getCurrentSnake().head().x === boardWidth
       case 'LEFT':
         return getCurrentSnake().head().x === -1
       case 'DOWN':
-        return getCurrentSnake().head().y === HEIGHT
+        return getCurrentSnake().head().y === boardHeight
       case 'UP':
         return getCurrentSnake().head().y === -1
       default:
