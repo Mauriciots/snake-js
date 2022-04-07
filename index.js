@@ -1,32 +1,10 @@
+import { boardManagerBuilder } from './scripts/board.js'
 import { segmentBuilder, snakeBuilder, snakeHistoryBuilder, drawSnake } from './scripts/snake.js'
+import { fruitManagerBuilder } from './scripts/fruit.js'
 
-// Board size is 20 tiles (width) per 16 tiles (height)
+// Board size is 28 tiles (width) per 16 tiles (height)
 const WIDTH = 28
 const HEIGHT = 16
-
-function drawBoard() {
-
-  const boardInnerEl = document.querySelector('#game-board')
-  const tileSize = boardInnerEl.scrollHeight / HEIGHT
-  
-  const createTileElement = (isEven, id) => {
-    const tileEl = document.createElement('div')
-    tileEl.classList.add('tile', isEven ? 'tile-even' : 'tile-odd')
-    tileEl.style.height = `${tileSize}px`
-    tileEl.style.width = `${tileSize}px`
-    tileEl.id = id
-    return tileEl
-  }
-
-  for (let i = 0; i < WIDTH; i++) {
-    for (let j = 0; j < HEIGHT; j++) {
-      const isEven = (j + i) % 2 === 0
-      boardInnerEl.appendChild(createTileElement(isEven, `tile-${i}-${j}`))
-    }
-  }
-  
-  boardInnerEl.style.width = `${tileSize * WIDTH}px`
-}
 
 function setRootElementSize() {
   const rootEl = document.querySelector('#game-root')
@@ -44,30 +22,35 @@ function setRootElementSize() {
   let direction = 'RIGHT'
 
   setRootElementSize()
-  drawBoard()
+  
+  const boardManager = boardManagerBuilder(WIDTH, HEIGHT)
+
   drawSnake(snakeHistory)
 
+  const fruitManager = fruitManagerBuilder(WIDTH, HEIGHT)
+  fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
+
   window.addEventListener('keydown', e => {
-    const LEFT_RIGHT = ['LEFT', 'RIGHT'].includes(direction)
-    const UP_DOWN = ['UP', 'DOWN'].includes(direction)
+    const isLeftOrRightDirection = ['LEFT', 'RIGHT'].includes(direction)
+    const isUpOrDownDirection = ['UP', 'DOWN'].includes(direction)
     switch (e.key) {
       case 'ArrowUp':
-        if (LEFT_RIGHT) {
+        if (isLeftOrRightDirection) {
           direction = 'UP';
         }
         break
       case 'ArrowDown':
-        if (LEFT_RIGHT) {
+        if (isLeftOrRightDirection) {
           direction = 'DOWN';
         }
         break
       case 'ArrowRight':
-        if (UP_DOWN) {
+        if (isUpOrDownDirection) {
           direction = 'RIGHT';
         }
         break
       case 'ArrowLeft':
-        if (UP_DOWN) {
+        if (isUpOrDownDirection) {
           direction = 'LEFT';
         }
         break
@@ -87,6 +70,11 @@ function setRootElementSize() {
       clearInterval(intervalId)
       return
     }
+    if (fruitManager.eat(snakeHistory.getCurrentSnake())) {
+      snakeHistory.grow()
+      fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
+    }
     drawSnake(snakeHistory)
+    // fruitManager.drop(snakeHistory.getCurrentSnake())
   }, 300)
 })();

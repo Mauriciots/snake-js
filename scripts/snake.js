@@ -14,11 +14,14 @@ function snakeBuilder(...snakeSegments) {
 
   const body = () => segments.slice(1, segments.length)
 
+  const tail = () => segments[segments.length - 1]
+
   // Returns an object that represents the snake body with all its segments
   return {
     segments,
     head,
     body,
+    tail,
   }
 }
 
@@ -34,7 +37,6 @@ function snakeHistoryBuilder(initialSnake) {
 
   const move = (direction) => {
     if (detectCollision(direction)) {
-      console.log(history)
       return false
     }
 
@@ -84,10 +86,18 @@ function snakeHistoryBuilder(initialSnake) {
     }
   }
 
+  const grow = () => {
+    const prevSnakeTail = getPrevSnake().tail()
+    const newSegment = {...prevSnakeTail}
+    const newSnake = snakeBuilder(...getCurrentSnake().segments, newSegment)
+    history.push(newSnake)
+  }
+
   return {
     getCurrentSnake,
     getPrevSnake,
     move,
+    grow,
   }
 }
 
