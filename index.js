@@ -10,7 +10,12 @@ function drawScore(score) {
   console.log('score', score)
 }
 
-(function() {
+function displayGameover() {
+  document.querySelector('#game-play').classList.toggle('hidden-screen')
+  document.querySelector('#game-over').classList.toggle('hidden-screen')
+}
+
+function game() {
   let points = 0
   const initialSnake = snakeBuilder(
     segmentBuilder(8, 8),
@@ -65,6 +70,7 @@ function drawScore(score) {
     changeDirection()
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
+      setTimeout(() => displayGameover(), 400)
       return
     }
     if (fruitManager.eat(snakeHistory.getCurrentSnake())) {
@@ -75,4 +81,18 @@ function drawScore(score) {
     }
     drawSnake(snakeHistory)
   }, 300)
+}
+
+(function() {
+  document.querySelector('#start-btn').addEventListener('click', () => {
+    document.querySelector('#start-screen').classList.toggle('hidden-screen')
+    document.querySelector('#game-play').classList.toggle('hidden-screen')
+    game()
+  })
+
+  document.querySelector('#back-btn').addEventListener('click', () => {
+    document.querySelector('#game-over').classList.toggle('hidden-screen')
+    document.querySelector('#game-play').classList.toggle('hidden-screen')
+    game()
+  })
 })();

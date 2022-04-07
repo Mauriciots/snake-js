@@ -15,10 +15,11 @@ function boardManagerBuilder(boardWidth, boardHeight) {
     }
   }
 
-  const boardInnerEl = document.querySelector('#game-board')
+  const boardEl = document.querySelector('#game-board')
+  boardEl.innerHTML = null
   tiles.forEach(({x, y}) => {
     const isEven = (x + y) % 2 === 0
-    boardInnerEl.appendChild(createTileElement(isEven, `tile-${x}-${y}`))
+    boardEl.appendChild(createTileElement(isEven, `tile-${x}-${y}`))
   })
 
   return {

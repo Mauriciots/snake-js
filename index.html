@@ -16,10 +16,31 @@
   <title>Snake.js</title>
 </head>
 <body>
-  <h1>Snake.js</h1>
-  <div id="game-board" class="game-board">
-    <!-- game will be rendered here! -->
-  </div>
+  <main class="container">
+    <div id="start-screen" class="screen start-screen">
+      <h1>Snake.js</h1>
+      <div class="start-screen-bottom">
+        <button type="button" class="button" id="start-btn">Start</button>
+      </div>
+    </div>
+
+    <div id="ranking-screen" class="screen ranking-screen hidden-screen">
+      <h1>Ranking</h1>
+      <button type="button" class="button">Back</button>
+    </div>
+
+    <div id="game-play" class="screen game-play hidden-screen">
+      <div id="game-board" class="game-board">
+        <!-- game will be rendered here! -->
+      </div>
+    </div>
+
+    <div id="game-over" class="screen game-over hidden-screen">
+      <h1>Game over!</h1>
+      <h2>Your score: <span id="game-score"></span></h2>
+      <button type="button" class="button back-button" id="back-btn">Back</button>
+    </div>
+  </main>
 
   <script src="index.js" type="module"></script>
 </body>
