@@ -5,9 +5,21 @@ import { fruitManagerBuilder } from './scripts/fruit.js'
 // Board size
 const WIDTH = 16
 const HEIGHT = 16
+const BEST_SCORE_STORAGE_KEY = 'snakejs-best-score'
 
 function drawScore(score) {
-  console.log('score', score)
+  const bestIconEl = document.querySelector('#best-icon')
+  const scoreEl = document.querySelector('#game-play-score')
+  const bestScoreEl = document.querySelector('#game-play-best')
+
+  scoreEl.innerHTML = score
+
+  const bestScore = parseInt(localStorage.getItem(BEST_SCORE_STORAGE_KEY)) || 0
+  let newBest = score && score > bestScore ? score : bestScore
+  if (newBest) {
+    bestScoreEl.innerHTML = newBest
+  }
+  bestIconEl.style.display = newBest ? 'inline' : 'none'
 }
 
 function displayGameover() {
@@ -27,6 +39,7 @@ function game() {
   
   const boardManager = boardManagerBuilder(WIDTH, HEIGHT)
 
+  drawScore(0)
   drawSnake(snakeHistory, direction)
 
   const fruitManager = fruitManagerBuilder(WIDTH, HEIGHT)
@@ -70,12 +83,12 @@ function game() {
     changeDirection()
     if (!snakeHistory.move(direction)) {
       clearInterval(intervalId)
-      setTimeout(() => displayGameover(), 400)
+      // setTimeout(() => displayGameover(), 400)
       return
     }
     if (fruitManager.eat(snakeHistory.getCurrentSnake())) {
       snakeHistory.grow()
-      points += 10
+      points += 1
       drawScore(points)
       fruitManager.drop(boardManager.tiles, snakeHistory.getCurrentSnake())
     }
