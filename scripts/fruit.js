@@ -1,4 +1,4 @@
-const FRUIT_COLOR = '#FF0000'
+// const FRUIT_BG = 'url(../assets/apple.png)'
 
 function fruitManagerBuilder(boardWidth, boardHeight) {
   let fruitTile = null
@@ -10,12 +10,16 @@ function fruitManagerBuilder(boardWidth, boardHeight) {
     const chosenIndex = Math.floor(Math.random() * availableTiles.length)
     fruitTile = availableTiles[chosenIndex]
 
-    document.querySelector(`#tile-${fruitTile.x}-${fruitTile.y}`).style.background = FRUIT_COLOR
+    document.querySelector(`#tile-${fruitTile.x}-${fruitTile.y}`).classList.add('tile-fruit')
   }
 
   const eat = (snake) => {
     const snakeHead = snake.head()
-    return snakeHead.x === fruitTile.x && snakeHead.y === fruitTile.y
+    const fruitReachable = snakeHead.x === fruitTile.x && snakeHead.y === fruitTile.y
+    if (fruitReachable) {
+      document.querySelector(`#tile-${fruitTile.x}-${fruitTile.y}`).classList.remove('tile-fruit')
+    }
+    return fruitReachable
   }
 
   return {

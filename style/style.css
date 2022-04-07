@@ -26,6 +26,31 @@ body {
   height: calc(100% / 16);
 }
 
+.tile-even {
+  background: #A2D148;
+}
+
+.tile-odd {
+  background: #AAD751;
+}
+
+@keyframes jumping-fruit {
+  0% { background-position: center  }
+  33% { background-position: top  }
+  66% { background-position: center  }
+  100% { background-position: bottom  }
+}
+
+.tile.tile-fruit {
+  background-image: url(../assets/apple.png);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 92%;
+  animation-name: jumping-fruit;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
 h1, h2, button {
   font-family: 'Lemon', cursive;
   text-align: center;
