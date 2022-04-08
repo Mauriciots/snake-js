@@ -10,8 +10,6 @@ const BEST_SCORE_STORAGE_KEY = 'snakejs-best-score'
 
 function renderStartScreen() {
   const ani = animation(WIDTH)
-  
-  // ani.run()
   setInterval(() => ani.run(), 150)
 }
 

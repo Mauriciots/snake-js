@@ -32,7 +32,6 @@ function animation(boardWidth) {
       const random = Math.floor(Math.random() * 3)
       snakeTilesPos = [-5, -4, -3, -2, -1]
       snakeAlign = ['flex-start', 'flex-end', 'center'][random]
-      console.log('reset snake animation')
     }
   }
   return {
