@@ -121,7 +121,7 @@ function drawSnake(snakeHistory, direction) {
   changeTileColor(
     snakeHistory.getCurrentSnake(),
     'center / cover no-repeat url(assets/snake-body.jpg)',
-    `center / cover no-repeat url(assets/snake-head-${direction}.jpg)`,
+    `center / cover no-repeat url(assets/snake-head-${direction.toLowerCase()}.jpg)`,
   )
 }
 
