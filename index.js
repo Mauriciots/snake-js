@@ -1,6 +1,7 @@
 import { boardManagerBuilder } from './scripts/board.js'
 import { segmentBuilder, snakeBuilder, snakeHistoryBuilder, drawSnake } from './scripts/snake.js'
 import { fruitManagerBuilder } from './scripts/fruit.js'
+import { animation } from './scripts/startScreen.js' 
 
 // Board size
 const WIDTH = 16
@@ -8,39 +9,10 @@ const HEIGHT = 16
 const BEST_SCORE_STORAGE_KEY = 'snakejs-best-score'
 
 function renderStartScreen() {
-  const rootEl = document.querySelector('#start-screen-snake')
-  for (let i = 0; i < WIDTH; i++) {
-    const tileEl = document.createElement('div')
-    tileEl.style.background = 'transparent'
-    tileEl.style.width = '31.25px'
-    tileEl.style.height = '31.25px'
-    tileEl.id = `snake-tile-${i}`
-    rootEl.appendChild(tileEl)
-  }
-
-  let snakeTilesPos = [-5, -4, -3, -2, -1]
+  const ani = animation(WIDTH)
   
-  setInterval(() => {
-    snakeTilesPos = snakeTilesPos.map(t => t + 1)
-    const toDraw = snakeTilesPos.filter(t => t >= 0 && t < 16)
-    if (toDraw.length) {
-      for (let i = 0; i < WIDTH; i++) {
-        const tileEl = document.querySelector(`#snake-tile-${i}`)
-        console.log(i, toDraw)
-        if (toDraw.find(t => t === i)) {
-          tileEl.style.background = 'black'
-        } else {
-          tileEl.style.background = 'transparent'
-        }
-      }
-    } else {
-      const rootEl = document.querySelector('#start-screen-snake')
-      const random = Math.floor(Math.random() * 3)
-      snakeTilesPos = [-5, -4, -3, -2, -1]
-      rootEl.style.alignItems = ['flex-start', 'flex-end', 'center'][random]
-      console.log('reset snake animation')
-    }
-  }, 150)
+  // ani.run()
+  setInterval(() => ani.run(), 150)
 }
 
 renderStartScreen()
