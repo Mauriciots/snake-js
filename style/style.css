@@ -101,7 +101,7 @@ h1 {
   flex-flow: column wrap;
   justify-content: flex-end;
   padding-bottom: 16px; 
-  background: url('../assets/startScreenBg.jpg');
+  background: url('../assets/start-screen-bg.jpg');
 }
 
 .game-over {
